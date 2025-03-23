@@ -1,9 +1,10 @@
 package tests;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,7 +20,9 @@ import java.util.stream.Stream;
 import static com.codeborne.selenide.Selenide.*;
 import static constants.Constants.BASE_URL;
 
-
+@Feature("Stepik")
+@Owner("Olganow")
+@Link(value = "Testing", url = "https://github.com/olganow")
 public class StepikWebTest extends TestBase {
     String testDataOne = "Тестирование";
     CatalogPage catalogPage = new CatalogPage();
@@ -39,6 +42,8 @@ public class StepikWebTest extends TestBase {
         searchPage.validatSearchResultPage();
     }
 
+    @Story("Catalog tests")
+    @Tag("actual")
     @ValueSource(strings = {"python", "java"})
     @ParameterizedTest
     @DisplayName("Check a number of recommendation on the first page for Stepik search for [test_data][0]")
@@ -48,7 +53,8 @@ public class StepikWebTest extends TestBase {
         searchPage.searchResultPageEqual24();
     }
 
-
+    @Story("Catalog tests")
+    @Tag("actual")
     @CsvSource(value = {
             "python, Асинхронный Python",
             "java,  Объектно-ориентированное программирование  на Java"
@@ -72,7 +78,8 @@ public class StepikWebTest extends TestBase {
         );
         return of;
     }
-
+    @Story("Catalog tests")
+    @Tag("actual")
     @MethodSource("stepikCheckLocaleTest")
     @DisplayName("Check button names according locale on Stepik")
     @ParameterizedTest
