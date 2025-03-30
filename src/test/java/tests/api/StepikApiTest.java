@@ -1,19 +1,22 @@
-package tests;
+package tests.api;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-import models.CourseResponseModel;
-import models.UserResponseModel;
+import api.models.CourseResponseModel;
+import api.models.LoginRequestModel;
+import api.models.LoginResponseModel;
+import api.models.UserResponseModel;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import specs.ApiSpec;
+import api.specs.ApiSpec;
 
 import static io.qameta.allure.Allure.step;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@Tag("api")
 public class StepikApiTest {
     @Test
     public void getCourse() {
@@ -50,6 +53,8 @@ public class StepikApiTest {
         });
     }
 
+
+
     @Test
     public void testGetUser() {
         RestAssured.baseURI = "https://stepik.org/api";
@@ -72,6 +77,62 @@ public class StepikApiTest {
         assertThat(user.getDetails()).isNotEmpty();
         assertThat(user.getAvatar()).isNotEmpty();
         assertThat(user.getFollowers_count()).isGreaterThan(0);
+    }
+
+    @Test
+    public void testUserLogin() {
+        RestAssured.baseURI = "https://stepik.org/api";
+
+        LoginRequestModel loginRequest = new LoginRequestModel();
+        loginRequest.setEmail("polyanow@yandex.ru");
+        loginRequest.setPassword("Gjgfgjgf76");
+
+        Response response = given()
+                .header("accept", "*/*")
+                .header("accept-language", "ru,en;q=0.9")
+                .header("content-type", "application/json; charset=UTF-8")
+                .header("referer", "https://stepik.org/catalog?auth=login")
+                .header("x-csrftoken", "COzo7TQx7LhqYi7RsKwyO6Xbq7IjfFffbFiY90QneiYRIdW13uV1SHuOT7ZhNBe7") // Убедитесь, что CSRF токен актуален
+                .body(loginRequest)
+                .when()
+                .post("/users/login")
+                .then()
+                .extract().response();
+
+        System.out.println("Response: " + response.asString());
+
+        // Проверка статуса ответа
+        assertThat(response.statusCode()).isEqualTo(200);
+
+        // Десериализация ответа
+        LoginResponseModel loginResponse = response.as(LoginResponseModel.class);
+        assertThat(loginResponse.getUser()).isNotNull();
+        assertThat(loginResponse.getUser().getEmail()).isEqualTo("polya@yandex.ru");
+      //  assertThat(loginResponse.getUser().isActive()).isTrue(); // Убедитесь, что метод называется isActive()
+
+        // Проверка наличия токена
+        assertThat(response.asString()).contains("token");
+
+    }
+
+    @Test
+    public void testUserLogout() {
+        RestAssured.baseURI = "https://stepik.org/api";
+
+        Response response = given()
+                .header("accept", "*/*")
+                .header("accept-language", "ru,en;q=0.9")
+                .header("content-type", "application/json; charset=UTF-8")
+                .header("x-csrftoken", "COzo7TQx7LhqYi7RsKwyO6Xbq7IjfFffbFiY90QneiYRIdW13uV1SHuOT7ZhNBe7")
+                .when()
+                .post("/users/logout")
+                .then()
+                .statusCode(204)
+                .extract().response();
+
+        System.out.println("Response: " + response.asString());
+
+        assertThat(response.asString()).isEmpty();
     }
 }
 

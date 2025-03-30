@@ -1,7 +1,8 @@
-package pages;
+package ui.pages;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import java.util.List;
 
@@ -13,14 +14,14 @@ public class CatalogPage {
             header = $x("//*[text()='Онлайн-курсы']"),
             searchInput = $(".search-form__input"),
             emailButton = $x("//*[text()='help@stepik.org']"),
-            changeLanguageButton = $x("//*[@class='drop-down drop-down-menu ember-view language-selector']//button/span");
+            changeLanguageButton = $x("//*[@class='drop-down drop-down-menu ember-view language-selector']//button/span"),
+            login = $x("//*[text()='Войти']");;
 
 
     private final static String COURSE_TITLE = "Онлайн-курсы";
-
+    private final static String ENTER = "Войти";
 
     public CatalogPage validateCatalogPage() {
-        ;
         header.shouldHave(text(COURSE_TITLE));
         return this;
     }
@@ -40,6 +41,13 @@ public class CatalogPage {
 
     public CatalogPage validateButtons(List<String> buttonsText) {
         $$(".navbar__menu-item").shouldHave(CollectionCondition.texts(buttonsText));
+        return this;
+    }
+
+
+    @Step("Click Login")
+    public CatalogPage clickLogin() {
+        login.shouldHave(text(ENTER)).click();
         return this;
     }
 

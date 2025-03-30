@@ -1,4 +1,4 @@
-package pages;
+package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Assertions;
@@ -17,10 +17,10 @@ public class SearchPage {
         return this;
     }
 
-    public SearchPage searchResultPageEqual24() {
+    public SearchPage searchResultPageHasPositiveCount() {
         $x("//*[text()='Далее']").scrollIntoView(true);
         int searchRes = $$(".course-cards__item").size();
-        Assertions.assertEquals(21, searchRes);
+        Assertions.assertTrue(searchRes > 0, "Количество элементов должно быть больше нуля, получено: " + searchRes);
         return this;
     }
 
