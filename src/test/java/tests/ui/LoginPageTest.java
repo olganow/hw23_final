@@ -14,7 +14,7 @@ import static constants.Constants.CATALOG_URL;
 @Owner("Olganow")
 @Link(value = "Testing", url = "https://github.com/olganow")
 @Tag("web")
-public class LoginPageTest extends TestBase {
+public class LoginPageTest extends UiTestBase {
     private String email = "test@test.com";
     private String password = "123123Qw!";
 

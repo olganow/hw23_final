@@ -1,4 +1,4 @@
-package specs;
+package api.specs;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -24,13 +24,8 @@ public class ApiSpec {
             .log(ALL)
             .build();
 
-    public static ResponseSpecification createdResponseSpec = new ResponseSpecBuilder()
-            .expectStatusCode(201)
-            .log(ALL)
-            .build();
-
-    public static ResponseSpecification deleteResponseSpec = new ResponseSpecBuilder()
-            .expectStatusCode(204)
+    public static ResponseSpecification unauthorizedErrorSpec = new ResponseSpecBuilder()
+            .expectStatusCode(401)
             .log(ALL)
             .build();
 

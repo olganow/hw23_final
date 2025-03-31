@@ -23,7 +23,7 @@ import static constants.Constants.CATALOG_URL;
 @Owner("Olganow")
 @Link(value = "Testing", url = "https://github.com/olganow")
 @Tag("web")
-public class CatalogPageTest extends TestBase {
+public class CatalogPageTest extends UiTestBase {
     String testDataOne = "Тестирование";
 
     @BeforeEach
