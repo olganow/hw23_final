@@ -3,6 +3,7 @@ package ui.pages;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Assertions;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -20,8 +21,9 @@ public class SearchPage {
 
     public SearchPage searchResultPageHasPositiveCount() {
         $x("//*[text()='Далее']").scrollIntoView(true);
-        int searchRes = $$(".course-cards__item").size();
-        Assertions.assertTrue(searchRes > 0, "Количество элементов должно быть больше нуля, получено: " + searchRes);
+        $$(".course-cards__item").shouldHave(sizeGreaterThan(0)).filterBy(visible).shouldHave(sizeGreaterThan(0));
+        int searchRes = $$(".course-cards__item").filter(visible).size();
+        Assertions.assertTrue(searchRes > 0, "Количество видимых элементов должно быть больше нуля, получено: " + searchRes);
         return this;
     }
 
