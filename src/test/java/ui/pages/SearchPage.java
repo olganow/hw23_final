@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Assertions;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class SearchPage {
@@ -25,7 +26,9 @@ public class SearchPage {
     }
 
     public SearchPage searchResult(String expectedText) {
-        $x(String.format("//*[text()='%s']", expectedText)).shouldHave(text(expectedText));
+        $x(String.format("//*[text()='%s']", expectedText))
+                .shouldBe(visible)
+                .shouldHave(text(expectedText));
         return this;
     }
 
