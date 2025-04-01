@@ -34,7 +34,7 @@ public class CatalogPageTest extends UiTestBase {
     @Disabled("It is very simple test")
     @Test
     @DisplayName("Check QA courses")
-    void cambridgeSearchOneWordTest() {
+    void searchTest() {
         catalogPage
                 .validateCatalogPage()
                 .setSearchData(testDataOne);
@@ -45,8 +45,8 @@ public class CatalogPageTest extends UiTestBase {
     @Tag("actual")
     @ValueSource(strings = {"java", "javascript"})
     @ParameterizedTest
-    @DisplayName("Check a number of recommendation on the first page for Stepik search for [test_data][0]")
-    void cambridgeSearchTwoWordTest(String testData) {
+    @DisplayName("Search courses on the main page for Stepik search for [test_data][0]")
+    void searchByParamsTest(String testData) {
         catalogPage
                 .validateCatalogPage()
                 .setSearchData(testData);
@@ -62,7 +62,7 @@ public class CatalogPageTest extends UiTestBase {
     )
     @ParameterizedTest
     @DisplayName("Check a number of Stepik search result for [test_data][0]")
-    void cambridgeSearchTwoParametersTest(String testData, String expectedText) {
+    void searchTwoParametersTest(String testData, String expectedText) {
         catalogPage.validateCatalogPage();
         catalogPage.setSearchData(testData);
         searchPage.searchResult(expectedText);
@@ -84,7 +84,7 @@ public class CatalogPageTest extends UiTestBase {
     @MethodSource("stepikCheckLocaleTest")
     @DisplayName("Check button names according locale on Stepik")
     @ParameterizedTest
-    void stepikCheckLocaleTest(Locale locale, List<String> buttonsText) {
+    void сheckLocaleTest(Locale locale, List<String> buttonsText) {
         catalogPage
                 .changeLanguage(locale)
                 .validateButtons(buttonsText);
