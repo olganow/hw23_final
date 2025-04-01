@@ -43,7 +43,7 @@ public class CatalogPageTest extends UiTestBase {
 
     @Story("Catalog tests")
     @Tag("actual")
-    @ValueSource(strings = {"python", "java"})
+    @ValueSource(strings = {"java", "javascript"})
     @ParameterizedTest
     @DisplayName("Check a number of recommendation on the first page for Stepik search for [test_data][0]")
     void cambridgeSearchTwoWordTest(String testData) {
