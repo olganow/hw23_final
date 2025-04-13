@@ -131,8 +131,8 @@ public class StepikApiTest extends ApiTestBase {
     @DisplayName("Login with invalid credentials")
     public void loginWithInvalidCredentials() {
         LoginRequestModel loginRequest = new LoginRequestModel();
-        loginRequest.setEmail("invalid@yandex.ru");
-        loginRequest.setPassword("wrongpassword");
+        loginRequest.setEmail(randomUtils.getUserEmail());
+        loginRequest.setPassword(randomUtils.getUserPassword());
 
         Response response = given()
                 .body(loginRequest)
