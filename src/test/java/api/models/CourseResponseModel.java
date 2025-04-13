@@ -7,7 +7,7 @@ import java.util.List;
 
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true) // Игнорируем неизвестные поля
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CourseResponseModel {
     private Meta meta;
     private List<Course> courses;

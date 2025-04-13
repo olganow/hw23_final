@@ -1,6 +1,7 @@
 package ui.pages;
 
 import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -15,22 +16,27 @@ public class CatalogPage {
             searchInput = $(".search-form__input"),
             emailButton = $x("//*[text()='help@stepik.org']"),
             changeLanguageButton = $x("//*[@class='drop-down drop-down-menu ember-view language-selector']//button/span"),
-            login = $x("//*[text()='Войти']");;
+            login = $x("//*[text()='Войти']");
 
+    private ElementsCollection
+            menuCollection = $$(".navbar__menu-item");
 
     private final static String COURSE_TITLE = "Онлайн-курсы";
     private final static String ENTER = "Войти";
 
+    @Step("Validate a catalog page")
     public CatalogPage validateCatalogPage() {
         header.shouldHave(text(COURSE_TITLE));
         return this;
     }
 
+    @Step("Set a search data")
     public CatalogPage setSearchData(String testData) {
         searchInput.setValue(testData).pressEnter();
         return this;
     }
 
+    @Step("Change language")
     public CatalogPage changeLanguage(Locale locale) {
         emailButton.scrollIntoView(true);
         changeLanguageButton.click();
@@ -39,11 +45,11 @@ public class CatalogPage {
         return this;
     }
 
+    @Step("Validate buttons")
     public CatalogPage validateButtons(List<String> buttonsText) {
-        $$(".navbar__menu-item").shouldHave(CollectionCondition.texts(buttonsText));
+        menuCollection.shouldHave(CollectionCondition.texts(buttonsText));
         return this;
     }
-
 
     @Step("Click Login")
     public CatalogPage clickLogin() {
